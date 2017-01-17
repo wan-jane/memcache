@@ -1,0 +1,19 @@
+{
+    "name": "wawa/memcache",
+    "description": "laravel5 memcache driver",
+    "type": "library",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "gengkang",
+            "email": "gengkang@xnw.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Wawa\\Memcache\\": "src/"
+        }
+    }
+}
