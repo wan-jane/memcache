@@ -50,7 +50,7 @@ class MemcacheServiceProvider extends ServiceProvider {
         $config = $this->app['config'];
         // if the cache driver is set to use the memcache driver
         $default_connection = $config['cache.default'];
-        if ($config['stores.'.$default_connection.'.driver'] == 'memcache') {
+        if ($config['cache.stores.'.$default_connection.'.driver'] == 'memcache') {
             // extend the cache manager
             $this->extendCache($this->app);
         }
