@@ -43,11 +43,15 @@ class MemcacheStore extends TaggableStore implements Store
      */
     public function many(array $keys)
     {
-        $return = [];
-        foreach ($keys as $key) {
-            $return[$key] = $this->get($key);
+        $keys = array_map(function ($key) {
+            return $this->prefix . $key;
+        }, $keys);
+
+        if ($value = $this->memcache->get($keys)) {
+            return $value;
         }
-        return $return;
+
+        return [];
     }
 
     /**
@@ -65,9 +69,12 @@ class MemcacheStore extends TaggableStore implements Store
         } else {
             $key = $this->prefix . $key;
         }
+
         if ($value = $this->memcache->get($key)) {
             return $value;
         }
+
+        return '';
     }
 
     /**
@@ -139,11 +146,10 @@ class MemcacheStore extends TaggableStore implements Store
      *
      * @param  string $key
      * @param  mixed $value
-     * @return void
      */
     public function forever($key, $value)
     {
-        return $this->put($key, $value, 0);
+        $this->put($key, $value, 0);
     }
 
     /**
@@ -170,7 +176,7 @@ class MemcacheStore extends TaggableStore implements Store
     /**
      * Get the underlying Memcached connection.
      *
-     * @return \Memcached
+     * @return \Memcache
      */
     public function getMemcache()
     {
